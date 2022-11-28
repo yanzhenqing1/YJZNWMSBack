@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.WMSMapper">
+    <!--根据手机号，邮箱，用户名查找用户数据-->
+    <select id="getSortedList" resultType="com.bean.TblWarehousingST">
+        select a.order_code,a.order_name,a.order_date,a.supplier_name,a.status,a.create_time,
+               b.shop_goods_code,b.shop_goods_name,b.plan_number,b.goods_unit_desc,b.warehousing_number,b.warehousing_number,
+               b.unit_price,b.tax_unit_price,b.rate,b.tax,b.untaxed_amount,b.discount_price,b.amount
+        from wms_wh_warehousing_order a,wms_wh_warehousing_order_seed b where a.id=b.warehousing_order_id and a.status='3'
+    </select>
+    <!--获取仓库列表-->
+    <select id="getWarehouseList" resultType="com.bean.TblWarehouse">
+        select id,warehouse_code,warehouse_name
+        from wms_wh_warehouse where del_flag='0'
+    </select>
+    <!--获取库区列表-->
+    <select id="getReservoirList" resultType="com.bean.TblReservoir">
+        select id,reservoir_code,reservoir_name
+        from wms_wh_reservoir where del_flag='0'
+    </select>
+<!--    &lt;!&ndash;获取库位（货架）列表&ndash;&gt;-->
+<!--    <select id="getShelvesList" resultType="com.bean.TblWarehouse">-->
+<!--        select id,warehouse_code,warehouse_name-->
+<!--        from wms_wh_reservoir where del_flag='0'-->
+<!--    </select>-->
+</mapper>

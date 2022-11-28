@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.TblUserMapper">
+    <!--根据手机号，邮箱，用户名查找用户数据-->
+    <select id="findAppUser" resultType="com.bean.TblAppUser">
+        SELECT * FROM sys_user WHERE phonenumber =  #{phone}  or login_name =  #{phone} or email =  #{phone}
+    </select>
+    <!--插入新用户-->
+    <insert id="userRegister" >
+        INSERT INTO sys_user(dept_id,login_name,user_name,user_type,email,phonenumber,sex,avatar,password,salt,status,del_flag,login_ip,login_date,pwd_update_date,create_by,create_time,update_by,update_time,remark) VALUES ("100",#{loginName},#{trueName},"00","",#{phone},"","",#{password},#{salt},0,0,"",null,null,"own",#{createDate},"own",null,"")
+    </insert>
+    <!--修改用户数据(性别，头像，登录IP，登录日期，md5密码，盐，修改密码日期，修改数据日期)-->
+    <update id="upUserLoginInfo">
+        update sys_user set sex=#{sex},avatar=#{avatar},login_ip = #{loginIp},login_date = #{loginDate}, password = #{password},salt = #{salt},pwd_update_date = #{upDate},update_time = #{upDate} where phonenumber = #{phone}
+    </update>
+
+
+
+
+
+
+
+
+
+<!--&lt;!&ndash;    \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\旧时代的遗物\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\&ndash;&gt;-->
+<!--    <select id="findUser" resultType="com.bean.Tbluser">-->
+<!--        SELECT username,userphone FROM tbluser WHERE userphone =  #{phone}-->
+<!--    </select>-->
+
+<!--    <insert id="insertUser" >-->
+<!--        INSERT INTO tbluser(userphone) VALUES (#{phone});-->
+<!--    </insert>-->
+
+<!--&lt;!&ndash; 统计用户量   &ndash;&gt;-->
+<!--    <select id="countUser" resultType="java.lang.Integer">-->
+<!--        SELECT count(userid) FROM tbluser WHERE state != 4-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 统计当月办卡数量   &ndash;&gt;-->
+<!--    <select id="countcardhand" resultType="java.lang.Integer">-->
+<!--        SELECT count(rid) FROM tblcardhandlingrecord  where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= createtime-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash; 统计当月办卡总金额   &ndash;&gt;-->
+<!--    <select id="countcardhandMoney" resultType="java.lang.Double">-->
+<!--        SELECT IFNULL(sum(money),0) FROM tblcardhandlingrecord  where DATE_SUB(CURDATE(), INTERVAL 30 DAY) &lt;= createtime-->
+<!--    </select>-->
+
+
+
+<!--&lt;!&ndash;    查找用户列表&ndash;&gt;-->
+<!--    <select id="getCustomerList" resultType="com.bean.Tbluser">-->
+<!--        select a.*,b.name from tbluser a inner join tbldictionaries b on a.state = b.did-->
+<!--        <where>-->
+<!--            <if test="username!=null and username !=''">-->
+<!--                and a.username like "%"#{username}"%"-->
+<!--            </if>-->
+<!--            <if test="state!=null">-->
+<!--                and a.state = #{state}-->
+<!--            </if>-->
+<!--            <if test="userphone!=null and userphone!=''">-->
+<!--                and a.userphone like "%"#{userphone}"%"-->
+<!--            </if>-->
+<!--            and a.state != 2-->
+<!--        </where>-->
+<!--    </select>-->
+<!--&lt;!&ndash;    删除客户&ndash;&gt;-->
+<!--    <update id="delCustomer">-->
+<!--        update tbluser set state = 4 where userid = #{userid}-->
+<!--    </update>-->
+<!--&lt;!&ndash;    回显客户信息&ndash;&gt;-->
+<!--    <select id="getCustomerInfo" resultType="com.bean.Tbluser">-->
+<!--        select a.*,b.name from tbluser a inner join tbldictionaries b on a.state = b.did where userid =#{userid}-->
+<!--    </select>-->
+<!--&lt;!&ndash;    修改客户信息&ndash;&gt;-->
+<!--    <update id="updateCustomer">-->
+<!--        update tbluser set remark = #{remark},state = #{state} where userid = #{userid}-->
+<!--    </update>-->
+</mapper>
